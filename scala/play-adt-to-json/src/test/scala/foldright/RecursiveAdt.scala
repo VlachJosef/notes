@@ -4,7 +4,7 @@ import org.scalatest.{ FlatSpec, Matchers }
 import org.scalatest.matchers.{ MatchResult, Matcher }
 import play.api.libs.json.{ Json, JsResult, JsValue, Reads, Writes }
 
-class RecursiveAdtSpec extends FlatSpec with Matchers with JsResultMatcher {
+class RecursiveAdtSpec extends FlatSpec with Matchers with JsResultMatchers {
 
   val form = Form("form")
   val formJson = Json.obj(
@@ -52,19 +52,5 @@ class RecursiveAdtSpec extends FlatSpec with Matchers with JsResultMatcher {
   it should "read Constant" in {
     val res: JsResult[Expr] = implicitly[Reads[Expr]].reads(constantJson)
     res should beJsSuccess[Expr](constant)
-  }
-}
-
-trait JsResultMatcher {
-  def beJsSuccess[E](element: E): Matcher[JsResult[E]] = new BeJsResult[E](element)
-
-  final private class BeJsResult[E](element: E) extends Matcher[JsResult[E]] {
-    def apply(jsResult: JsResult[E]): MatchResult = {
-      MatchResult(
-        jsResult.fold(_ => false, _ == element),
-        s"'$jsResult' did not contain an element matching '$element'.",
-        s"'$jsResult' contained an element matching '$element', but should not have."
-      )
-    }
   }
 }
