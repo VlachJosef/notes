@@ -1,0 +1,18 @@
+<lift:surround with="my-default" at="content">
+  <lift:head>
+    <script type="text/javascript"
+            src="thing-in-head.js"></script>
+  </lift:head>
+  <lift:tail>
+    <script type="text/javascript"
+            src="thing-in-tail.js"></script>
+  </lift:tail>
+    <h1>Welcome, you now have a working Lift installation</h1>
+    <div lift="Selector.helloWorld">...</div>
+    <div class="l:Selector.helloWorld">...</div>
+    <div class="lift:Selector.helloWorld">...</div>
+    <!-- <lift:Selector.helloWorld><p>Replace me</p></lift:Selector.helloWorld> -->
+    <lift:snippet type="Selector:helloWorld"><p>Replace me</p></lift:snippet>
+
+    <lift:embed what="/foo/bar"/>
+</lift:surround>
